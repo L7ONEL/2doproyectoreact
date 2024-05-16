@@ -1,6 +1,6 @@
 import { Component } from "react"
-import Boton from './componentes/Boton'
 import './App.css'
+import Formulario from "./componentes/Formulario";
 
 export default class App extends Component {
   
@@ -12,30 +12,32 @@ export default class App extends Component {
     }
   }
 
-  generarNotas() {
-    let nuevasNotas = this.state.notas;
-    nuevasNotas.push({nota: 0});
+  generarNotas(nombre) {
 
-    this.setState({notas: nuevasNotas});
+    let nuevasNotas = this.state.notas;
+    nuevasNotas.push({nombre, valor: 0});
+
+    this.setState({contadores: nuevosContadores});
+
   }
   
   render(){
     return(
       <div className="Contenedor">
-        <Boton 
-          generarNotas = {() => this.generarNotas()}
-          simbolo = "AGREGAR UNA NUEVA NOTA"
+
+        <Formulario 
+          generarNotas = {(nombre) => this.generarNotas(nombre)}
         />
 
-        {this.state.notas.map((cont, index) => 
-          <Nota>
-            {cont.nota}
-          </Nota>
-        )}
-
         <div className="ListaNotas">
-          <h2>Promedio: </h2>
+          {this.state.notas.map((cont, index) => 
+            <Nota>
+              {cont.nota}
+            </Nota>
+          )}
         </div>
+
+        <h2>Promedio: </h2>
       </div>
     )
   }

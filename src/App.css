@@ -29,6 +29,16 @@
   cursor: pointer;
 }
 
+.Formulario {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: lightblue;
+  border-radius: 15px;
+  padding: 15px 20px;
+  margin: 10px;
+}
+
 .Nota {
   display: flex;
   flex-direction: column;
