@@ -17,30 +17,37 @@ export default class App extends Component {
 
     let nuevasNotas = this.state.notas;
     let i = this.state.notas.length
-    nuevasNotas.push({id: i, materia: nombre, valor: 0});
+    nuevasNotas.push({id: i+1, materia: nombre, nota: 0});
 
-    this.setState({notas: nuevasNotas}, this.calcularPromedio(i))
+    this.setState({notas: nuevasNotas}, this.calcularPromedio(i+1))
+    console.log(this.state.notas);
 
   }
 
   calcularPromedio(longitud) {
-    console.log(longitud);
+
     if (longitud.length === 0) {
       this.setState({ promedio: 0 });
       return;
+    } else {
+
+      let notas = [];
+
+      for (let i = 0; i < this.state.notas; i++) {
+        notas.push(this.state.notas[i].nota);
+      }
+    
+      let sum = notas.reduce((acumulador, current) => acumulador + current, 0);
+      let promedio = sum / longitud;
+    
+      this.setState({ promedio });
     }
-    
-    let sum = this.state.notas.reduce((acumulador, current) => acumulador + current, 0);
-    console.log(sum);
-    let promedio = sum / longitud;
-    
-    this.setState({ promedio });
   }
 
   eliminar(pos) {
 
     let nuevasNotas = this.state.notas;
-    nuevasNotas.splice(pos, 1)
+    nuevasNotas.splice(pos-1, 1)
 
     this.setState({notas: nuevasNotas});
 
@@ -57,7 +64,7 @@ export default class App extends Component {
         <div className="ListaNotas">
           {this.state.notas.map((cont, index) => 
             <Nota
-              valor = {cont.valor}
+              valor = {cont.nota}
               key = {cont.id}
               eliminar = {() => this.eliminar(index)}
             >
