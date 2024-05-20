@@ -17,7 +17,7 @@ export default class Formulario extends Component {
                     type="text"
                     placeholder="Nombre de la materia" 
                     value={this.state.nombre} 
-                    onChange={(e) => {this.setState({nombre:e.target.value})}}
+                    onChange={(e) => this.setState({nombre:e.target.value})}
                     required 
                 />
 

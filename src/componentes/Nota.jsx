@@ -21,11 +21,15 @@ export default class Nota extends Component {
       return(
         <div className="Nota">
           <span className='Titulo'>{this.state.materia}</span>
-          <input type="number" value={this.state.nota} />
+          <input 
+            type="number" 
+            value={this.state.nota} 
+            onChange={(e) => this.setState({nota:e.target.value})}
+          />
           <div className="Botonera">
             <Boton 
               simbolo='Cambiar'
-              accion={() => {this.cambiar()}}
+              accion={() => this.props.cambiarNota(this.state.nota)}
             />
 
             <Boton 

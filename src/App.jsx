@@ -16,43 +16,52 @@ export default class App extends Component {
   generarNotas(nombre) {
 
     let nuevasNotas = this.state.notas;
-    let i = this.state.notas.length
-    nuevasNotas.push({id: i+1, materia: nombre, nota: 0});
+    nuevasNotas.push({materia: nombre, nota: 0});
 
-    this.setState({notas: nuevasNotas}, this.calcularPromedio(i+1))
+    this.setState({notas: nuevasNotas}, this.calcularPromedio)
     console.log(this.state.notas);
 
   }
 
-  calcularPromedio(longitud) {
+  calcularPromedio() {
 
-    if (longitud.length === 0) {
+    console.log(this.state.notas);
+    let longitud = this.state.notas.length;
+
+    if (longitud === 0) {
       this.setState({ promedio: 0 });
       return;
     } else {
 
       let notas = [];
 
-      for (let i = 0; i < this.state.notas; i++) {
+      for (let i = 0; i < longitud; i++) {
         notas.push(this.state.notas[i].nota);
       }
     
-      let sum = notas.reduce((acumulador, current) => acumulador + current, 0);
-      let promedio = sum / longitud;
+      let suma = notas.reduce((acumulador, notaActual) => parseFloat(acumulador) + parseFloat(notaActual), 0);
+      let promedio = suma / longitud;
     
       this.setState({ promedio });
     }
+  }
+  
+  cambiarNota(index, nuevaNota) {
+    let nuevasNotas = this.state.notas.slice();
+    nuevasNotas[index].nota = nuevaNota;
+
+    this.setState({notas: nuevasNotas}, this.calcularPromedio);
   }
 
   eliminar(pos) {
 
     let nuevasNotas = this.state.notas;
-    nuevasNotas.splice(pos-1, 1)
+    nuevasNotas.splice(pos, 1)
 
     this.setState({notas: nuevasNotas});
 
   }
-  
+
   render(){
     return(
       <div className="Contenedor">
@@ -65,7 +74,8 @@ export default class App extends Component {
           {this.state.notas.map((cont, index) => 
             <Nota
               valor = {cont.nota}
-              key = {cont.id}
+              key = {cont.materia}
+              cambiarNota = {(nuevaNota) => this.cambiarNota(index, nuevaNota)}
               eliminar = {() => this.eliminar(index)}
             >
               {cont.materia}
