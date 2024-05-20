@@ -51,3 +51,14 @@
 .Promedio {
   
 }
+
+.Titulo {
+  font-size: 18px;
+  text-align: center;
+  width: 100%;
+}
+
+.Botonera {
+  display: flex;
+  flex-direction: row;
+}

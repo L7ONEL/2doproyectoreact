@@ -1,6 +1,7 @@
 import { Component } from "react"
 import './App.css'
 import Formulario from "./componentes/Formulario";
+import Nota from "./componentes/Nota"
 
 export default class App extends Component {
   
@@ -15,9 +16,33 @@ export default class App extends Component {
   generarNotas(nombre) {
 
     let nuevasNotas = this.state.notas;
-    nuevasNotas.push({nombre, valor: 0});
+    let i = this.state.notas.length
+    nuevasNotas.push({id: i, materia: nombre, valor: 0});
 
-    this.setState({contadores: nuevosContadores});
+    this.setState({notas: nuevasNotas}, this.calcularPromedio(i))
+
+  }
+
+  calcularPromedio(longitud) {
+    console.log(longitud);
+    if (longitud.length === 0) {
+      this.setState({ promedio: 0 });
+      return;
+    }
+    
+    let sum = this.state.notas.reduce((acumulador, current) => acumulador + current, 0);
+    console.log(sum);
+    let promedio = sum / longitud;
+    
+    this.setState({ promedio });
+  }
+
+  eliminar(pos) {
+
+    let nuevasNotas = this.state.notas;
+    nuevasNotas.splice(pos, 1)
+
+    this.setState({notas: nuevasNotas});
 
   }
   
@@ -31,13 +56,17 @@ export default class App extends Component {
 
         <div className="ListaNotas">
           {this.state.notas.map((cont, index) => 
-            <Nota>
-              {cont.nota}
+            <Nota
+              valor = {cont.valor}
+              key = {cont.id}
+              eliminar = {() => this.eliminar(index)}
+            >
+              {cont.materia}
             </Nota>
           )}
         </div>
 
-        <h2>Promedio: </h2>
+        <h2>Promedio: {this.state.promedio.toFixed(2)}</h2>
       </div>
     )
   }
