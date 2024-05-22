@@ -47,10 +47,15 @@ export default class App extends Component {
   }
   
   cambiarNota(index, nuevaNota) {
-    let nuevasNotas = this.state.notas.slice();
-    nuevasNotas[index].nota = nuevaNota;
+    if (nuevaNota <= 10 && nuevaNota > 0) {
+      let nuevasNotas = this.state.notas.slice();
+      nuevasNotas[index].nota = nuevaNota;
 
-    this.setState({notas: nuevasNotas}, this.calcularPromedio);
+      this.setState({notas: nuevasNotas}, this.calcularPromedio);
+    } else {
+      alert('La nueva nota tiene que ser mayor a 0 y no puede ser mayor que 10.');
+      return;
+    }    
   }
 
   eliminar(pos) {
