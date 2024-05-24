@@ -14,32 +14,28 @@ export default class App extends Component {
   }
 
   generarNotas(nombre) {
-
     let nuevasNotas = this.state.notas;
     nuevasNotas.push({materia: nombre, nota: 0});
 
     this.setState({notas: nuevasNotas}, this.calcularPromedio)
-    console.log(this.state.notas);
+  }
 
+  borrarTodo() {
+    this.setState({notas: []})
   }
 
   calcularPromedio() {
-
-    console.log(this.state.notas);
-    let longitud = this.state.notas.length;
-
-    if (longitud === 0) {
-      this.setState({ promedio: 0 });
-      return;
+    if (this.state.notas.length === 0) {
+      return this.setState({ promedio: 0 });
     } else {
 
       let notas = [];
 
-      for (let i = 0; i < longitud; i++) {
+      for (let i = 0; i < this.state.notas.length; i++) {
         notas.push(this.state.notas[i].nota);
       }
     
-      let suma = notas.reduce((acumulador, notaActual) => parseFloat(acumulador) + parseFloat(notaActual), 0);
+      let suma = this.state.notas.reduce((acumulador, notaActual) => parseFloat(acumulador) + parseFloat(notaActual), 0);
       let promedio = suma / longitud;
     
       this.setState({ promedio });
@@ -59,12 +55,10 @@ export default class App extends Component {
   }
 
   eliminar(pos) {
-
     let nuevasNotas = this.state.notas;
     nuevasNotas.splice(pos, 1)
 
     this.setState({notas: nuevasNotas});
-
   }
 
   render(){
@@ -73,6 +67,7 @@ export default class App extends Component {
 
         <Formulario 
           generarNotas = {(nombre) => this.generarNotas(nombre)}
+          borrarTodo = {() => this.borrarTodo()}
         />
 
         <div className="ListaNotas">

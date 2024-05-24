@@ -25,7 +25,12 @@ export default class Formulario extends Component {
                     accion={()=> this.props.generarNotas(this.state.nombre)} 
                     simbolo="AGREGAR UNA NUEVA NOTA"
                 />
-                
+
+                <Boton 
+                    accion={()=> this.props.borrarTodo()} 
+                    simbolo="ELIMINAR NOTAS"
+                />
+
             </div>
         )
     }

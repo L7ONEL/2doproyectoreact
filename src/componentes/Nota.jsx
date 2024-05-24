@@ -6,7 +6,6 @@ export default class Nota extends Component {
       super(props);
       this.state = {
         materia: "",
-        nota: 0,
       }
     }
 
@@ -17,26 +16,25 @@ export default class Nota extends Component {
       });
     }
 
+    cambiar = (e) => {
+      const nuevaNota = Number(e.target.value);
+
+      this.props.cambiarNota(nuevaNota);
+    }
+
     render() {
       return(
         <div className="Nota">
           <span className='Titulo'>{this.state.materia}</span>
           <input 
-            type="number" 
-            value={this.state.nota} 
-            onChange={(e) => this.setState({nota:e.target.value})}
+            type="number"
+            onChange={this.cambiar}
           />
-          <div className="Botonera">
-            <Boton 
-              simbolo='Cambiar'
-              accion={() => this.props.cambiarNota(this.state.nota)}
-            />
 
-            <Boton 
-              simbolo='X'
-              accion={() => this.props.eliminar()}
-            />
-          </div>
+          <Boton 
+            simbolo='X'
+            accion={() => this.props.eliminar()}
+          />
         </div>
       )
     }
